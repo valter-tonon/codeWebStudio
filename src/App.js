@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState ,useRef} from 'react';
+import Particles from './components/Letter'
+import { ThemeProvider } from 'styled-components'
+import GlobalStyles from './Styles/global'
+import  Burger  from './components/Burger'
+import Menu from './components/Menu'
+import { useOnClickOutside } from './hook'
+import { theme } from './theme'
 
 function App() {
+  const node = useRef(); 
+    useOnClickOutside(node, () => setOpen(false));
+
+  const[open, setOpen]= useState(false)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <ThemeProvider theme={theme}>
+    <div >
+      <GlobalStyles/>
+      <Particles/>
+      <div ref={node}>
+        <Burger open={open} setOpen={setOpen} />
+        <Menu open={open} setOpen={setOpen} />
+      </div>
     </div>
-  );
+    </ThemeProvider>
+  )
 }
+
+
 
 export default App;
